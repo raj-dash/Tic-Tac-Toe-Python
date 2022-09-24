@@ -35,6 +35,63 @@ def draw_figures(grid, rows, cols):
                 pygame.draw.line(win, black, (int(col * width / 3 + line_space), int(row * width / 3 + line_space)),(int(col * width/3 + width / 3 - line_space), int(row * width / 3 + width / 3 - line_space)), line_width)
 
 
+def check_win(grid,mark):
+    return ((grid[0][0] == mark and grid[0][1] == mark and grid[0][2] == mark) or
+    (grid[1][0] == mark and grid[1][1] == mark and grid[1][2] == mark) or
+    (grid[2][0] == mark and grid[2][1] == mark and grid[2][2] == mark) or
+    (grid[0][0] == mark and grid[1][1] == mark and grid[2][2] == mark) or
+    (grid[2][0] == mark and grid[1][1] == mark and grid[0][2] == mark) or
+    (grid[0][0] == mark and grid[1][0] == mark and grid[2][0] == mark) or
+    (grid[0][1] == mark and grid[1][1] == mark and grid[2][1] == mark) or
+    (grid[0][2] == mark and grid[1][2] == mark and grid[2][2] == mark))
+
+
+def draw_win(grid,mark):
+    if mark == 1:
+        color = white
+    elif mark == 2:
+        color = black
+    else:
+        color = red
+    if grid[0][0] == mark and grid[0][1] == mark and grid[0][2] == mark:
+        pygame.draw.line(win, color, (width//30, width//6), (width - (width//30), width//6), line_width)
+    elif grid[1][0] == mark and grid[1][1] == mark and grid[1][2] == mark:
+        pygame.draw.line(win, color, (width // 30, width // 2), (width - (width//30), width//2), line_width)
+    elif grid[2][0] == mark and grid[2][1] == mark and grid[2][2] == mark:
+        pygame.draw.line(win, color, (width // 30, (width // 2) + (width//3)), (width - (width // 30), (width // 2) + (width//3)), line_width)
+    elif grid[0][0] == mark and grid[1][1] == mark and grid[2][2] == mark:
+        pygame.draw.line(win, color, (width//20, width//20), (width - (width//20), width - (width//20)), line_width)
+    elif grid[2][0] == mark and grid[1][1] == mark and grid[0][2] == mark:
+        pygame.draw.line(win, color, (width//20, width - (width//20)), (width - (width//20), width//20), line_width)
+    elif grid[0][0] == mark and grid[1][0] == mark and grid[2][0] == mark:
+        pygame.draw.line(win, color, (width//6, width//30), (width//6, width - (width//30)), line_width)
+    elif grid[0][1] == mark and grid[1][1] == mark and grid[2][1] == mark:
+        pygame.draw.line(win, color, (width // 2, width // 30), (width // 2, width - (width // 30)), line_width)
+    elif grid[0][2] == mark and grid[1][2] == mark and grid[2][2] == mark:
+        pygame.draw.line(win, color, ((width//2) + (width//3), width//30), ((width//2) + (width//3), width - (width//30)), line_width)
+
+
+
+def check_draw(grid, rows, cols):
+    for row in range(rows):
+        for col in range(cols):
+            if grid[col][row] == 0:
+                return False
+
+
+def reset(grid):
+    global game_over, player, draw
+    win.fill(green)
+    draw_lines(line_colour)
+    draw_score()
+    game_over = False
+    draw = False
+    player = 1
+    for row in range(rows):
+        for col in range(cols):
+            grid[row][col] = 0
+
+
 def quit():
     pygame.quit()
     sys.exit()
@@ -70,6 +127,7 @@ c_width = width//40
 circle_space = width//6
 line_space = width//13
 line_width = width//30
+draw = False
 clock = pygame.time.Clock()
 FPS = 60
 
