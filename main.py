@@ -9,6 +9,14 @@ def draw_lines(l_colour):
     pygame.draw.line(win, l_colour, (0, (width / 3) * 2), (width, (width / 3) * 2), 10)
 
 
+def get_clicked_pos(pos, rows, width):
+    gap = width//rows
+    y, x = pos
+    row = y//gap
+    col = x//gap
+    return row, col
+
+
 def quit():
     pygame.quit()
     sys.exit()
@@ -20,6 +28,12 @@ def main():
             if event.type == pygame.QUIT:
                 quit()
 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                x, y = get_clicked_pos(pos, rows, width)
+                if not game_over:
+                    pass
+
         # drawing
         pygame.display.update()
         clock.tick(FPS)
@@ -29,6 +43,8 @@ pygame.init()
 
 # variables
 
+rows = cols = 3
+game_over = False
 width = 550
 clock = pygame.time.Clock()
 FPS = 60
