@@ -31,9 +31,9 @@ def main():
             if event.type == pygame.QUIT:
                 quit()
 
-    # drawing
-    pygame.display.update()
-    clock.tick(FPS)
+        # drawing
+        pygame.display.update()
+        clock.tick(FPS)
 
 if __name__ == "__main__":
     main()
